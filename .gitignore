@@ -1,0 +1,40 @@
+# 4D Project .gitignore
+
+# Ignore 4D Data folder (never commit real data)
+Data/
+data/
+Backup/
+backup/
+*.journal
+*.4DD
+*.4DIndx
+*.4DSyncData
+*.4DExternalData
+*.4dbase
+
+# macOS system files
+.DS_Store
+
+# 4D build/output folders
+Build/
+build/
+DerivedData/
+
+# Others
+*.backup
+*.tmp
+*.log
+*.env
+
+# Libraries
+Libraries/
+
+# User preferences
+userPreferences.*/
+
+# Uncomment (remove the following # ) to ignore Trash
+Project/Trash
+
+# System files
+ehthumbs.db
+Thumbs.db
