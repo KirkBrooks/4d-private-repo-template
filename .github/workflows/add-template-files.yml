@@ -1,9 +1,10 @@
+---
 name: Add missing template files
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: true
   push:
-    branches: [ main, master ]
+    branches: [main, master]
 
 jobs:
   add-templates:
@@ -13,32 +14,36 @@ jobs:
 
       - name: Ensure README.md exists
         run: |
-          if [ ! -f README.md ]; then
-            echo "# \$(basename \$GITHUB_REPOSITORY)" > README.md
-            echo "Created by GitHub Action on \$(date)" >> README.md
+          if [ ! -f ${{ github.workspace }}/README.md ]; then
+            echo "# \$(basename \$GITHUB_REPOSITORY)" > \
+              ${{ github.workspace }}/README.md
+            echo "Created by GitHub Action on \$(date)" >> \
+              ${{ github.workspace }}/README.md
           fi
 
       - name: Ensure LICENSE exists
         run: |
-          if [ ! -f LICENSE ]; then
-            echo "MIT License" > LICENSE
-            echo "" >> LICENSE
-            echo "(C) \$(date +'%Y') \$GITHUB_ACTOR" >> LICENSE
+          if [ ! -f ${{ github.workspace }}/LICENSE ]; then
+            echo "MIT License" > ${{ github.workspace }}/LICENSE
+            echo "" >> ${{ github.workspace }}/LICENSE
+            echo "(C) \$(date +'%Y') \$GITHUB_ACTOR" >> \
+              ${{ github.workspace }}/LICENSE
           fi
 
       - name: Ensure .gitignore exists
         run: |
-          if [ ! -f .gitignore ]; then
-            echo "Data/" > .gitignore
-            echo ".DS_Store" >> .gitignore
-            echo "*.backup" >> .gitignore
+          if [ ! -f ${{ github.workspace }}/.gitignore ]; then
+            echo "Data/" > ${{ github.workspace }}/.gitignore
+            echo ".DS_Store" >> ${{ github.workspace }}/.gitignore
+            echo "*.backup" >> ${{ github.workspace }}/.gitignore
           fi
 
       - name: Ensure CHANGELOG.md exists
         run: |
-          if [ ! -f CHANGELOG.md ]; then
-            echo "# Changelog" > CHANGELOG.md
-            echo "All notable changes to this project will be documented here." >> CHANGELOG.md
+          if [ ! -f ${{ github.workspace }}/CHANGELOG.md ]; then
+            echo "# Changelog" > ${{ github.workspace }}/CHANGELOG.md
+            echo "All notable changes will be documented here." >> \
+              ${{ github.workspace }}/CHANGELOG.md
           fi
 
       - name: Commit and push changes
