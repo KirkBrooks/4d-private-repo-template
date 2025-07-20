@@ -1,0 +1,48 @@
+name: Add missing template files
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  add-templates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Ensure README.md exists
+        run: |
+          if [ ! -f README.md ]; then
+            echo "# \$(basename \$GITHUB_REPOSITORY)" > README.md
+            echo "Created by GitHub Action on \$(date)" >> README.md
+          fi
+
+      - name: Ensure LICENSE exists
+        run: |
+          if [ ! -f LICENSE ]; then
+            echo "MIT License" > LICENSE
+            echo "" >> LICENSE
+            echo "(C) \$(date +'%Y') \$GITHUB_ACTOR" >> LICENSE
+          fi
+
+      - name: Ensure .gitignore exists
+        run: |
+          if [ ! -f .gitignore ]; then
+            echo "Data/" > .gitignore
+            echo ".DS_Store" >> .gitignore
+            echo "*.backup" >> .gitignore
+          fi
+
+      - name: Ensure CHANGELOG.md exists
+        run: |
+          if [ ! -f CHANGELOG.md ]; then
+            echo "# Changelog" > CHANGELOG.md
+            echo "All notable changes to this project will be documented here." >> CHANGELOG.md
+          fi
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: add missing template/support files"
+          branch: ${{ github.ref_name }}
